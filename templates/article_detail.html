@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="card" >
+      <div class="card-body">
+          {%  if object.photo %}
+            <img class="card-img-top" src="{{ object.photo.url }}" alt="{{ object.title }}">
+          {% endif %}
+          <h1 class="card-title">{{ object.title }}</h1>
+          <h6 class="card-subtitle mb-2 text-muted">Author: {{ object.author }} | {{ object.date }}</h6>
+          <p class="card-text">{{ object.body | safe }}</p>
+          <a href="{% url 'article_edit' article.pk %}">Edit</a> |
+          <a href="{% url 'article_delete' article.pk %}">Delete</a> |
+          <a href="{% url 'article_list' %}">All posts</a>
+      </div>
+    </div>
+    <hr>
+    <h2>Comments</h2>
+    <div class="comments">
+        {% for comment in comments %}
+            <div class="card mb-2">
+                <div class="card-body">
+                    <p class="card-text">{{ comment.comment }}</p>
+                    <h6 class="card-subtitle mb-2 text-muted">Author: {{ comment.author }} | {{ comment.date }}</h6>
+                </div>
+            </div>
+        {% empty %}
+            <p>No comments yet.</p>
+        {% endfor %}
+    </div>
+    {% if user.is_authenticated %}
+        <hr>
+        <h2>Leave a comment</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    {% else %}
+        <p>You must be <a href="{% url 'login' %}">logged in</a> to leave a comment.</p>
+    {% endif %}
+</div>
+{% endblock content %}

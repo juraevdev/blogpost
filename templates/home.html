@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home Page{% endblock title %}
+{% block content %}
+<br/>
+<div class="jumbotron">
+    <h1 class="display-4">Hello!</h1>
+    <p class="lead">Welcome to Juraev Davlat's personal web-blog site</p>
+    <hr class="my-4">
+    <p>Here you can get interesting news.</p>
+    <p class="lead">
+    <a class="btn btn-primary btn-lg" href="{% url 'article_list' %}" role="button">See all posts</a>
+    </p>
+  </div>
+{% endblock content %}  
